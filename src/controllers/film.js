@@ -1,6 +1,6 @@
 import { Film } from '../models/film.js';
 
-// Route handler to create a new film - NEW FILM
+// function to create a new film - CREATE FILM
 export const newFilm = async (req, res) => {
   const film = new Film.find(req.body);
 
@@ -35,6 +35,7 @@ export const getFilmById = async (req, res) => {
     // filters by _id
     const film = await Film.findById({ _id });
 
+    // if no film is found
     if (!film) {
       return res.status(404).send();
     }
@@ -74,6 +75,7 @@ export const deleteFilm = async (req, res) => {
       _id: req.params.id,
     });
 
+    // if no film is found
     if (!film) {
       res.status(404).send();
     }

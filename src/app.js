@@ -1,21 +1,16 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 import process from 'process';
 import express from 'express';
 import logger from 'morgan';
 import { applicationDefault, initializeApp } from 'firebase-admin';
-
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
 
 // Initialized the Firebase SDK
 initializeApp({
   credential: applicationDefault(),
 });
 
-// import database connection
-import './db/db/js';
+// import the database connection
+import './db/db.js';
 
 // Import the Routes
 import { filmRouter } from './routes/film.js';
@@ -28,7 +23,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // allows static access to the angular folder
-app.use(express.static(path.join(__dirname, './dist/my-film-app-client')));
+app.use(express.static(path.resolve('dist/my-film-app-client')));
 
 // automatically parse incoming JSON to an object so we can access it in our request handlers
 app.use(express.json());
@@ -44,7 +39,7 @@ app.use(commentRouter);
 // handle all other routes with angular app - returns angular app
 app.use('*', (req, res) => {
   // send back the angular index.html file
-  res.sendFile(path.join(__dirname, './dist/my-film-app-client', 'index.html'));
+  res.sendFile(path.resovle('dist/my-film-app-client/index.html'));
 });
 
 // start the server

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
+// create a comment schema
 const filmSchema = new Schema(
   {
     title: {

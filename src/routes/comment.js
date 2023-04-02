@@ -18,5 +18,5 @@ router.get('/api/comments', getComments);
 // Route handler to delete a comment by Id - DELETE COMMENT
 router.delete('/api/comments/:id', deleteComment);
 
-// export the router to be used
+// export the router
 export { router };

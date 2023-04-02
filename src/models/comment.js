@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
+// create a comment schema
 const commentSchema = new Schema(
   {
     title: {
