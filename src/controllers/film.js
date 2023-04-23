@@ -2,7 +2,8 @@ import { Film } from '../models/film.js';
 
 // function to create a new film - CREATE FILM
 export const newFilm = async (req, res) => {
-  const film = new Film.find(req.body);
+  // build a new film instance
+  const film = Film.build(req.body);
 
   try {
     await film.save();
@@ -12,11 +13,12 @@ export const newFilm = async (req, res) => {
   }
 };
 
-// Route handler to fetching all films - GET ALL FILMS
+// function to fetch all films - ALL FILMS
 export const getFilms = async (req, res) => {
   try {
-    const films = await Film.find({});
+    const films = await Film.findAll();
 
+    // if no films are found
     if (!films) {
       return res.status(404).send();
     }
@@ -27,13 +29,14 @@ export const getFilms = async (req, res) => {
   }
 };
 
-// Route handler to fetch individual film by ID
+// function to fetch individual film by ID
 export const getFilmById = async (req, res) => {
-  const _id = req.params.id;
+  // convert id string into integer
+  const id = parseInt(req.params.id);
 
   try {
-    // filters by _id
-    const film = await Film.findById({ _id });
+    // Search for a single film by its primary key.
+    const film = await Film.findByPk(id);
 
     // if no film is found
     if (!film) {
@@ -48,11 +51,14 @@ export const getFilmById = async (req, res) => {
 
 // Route handler to update an existing film - UPDATE FILM
 export const updateFilm = async (req, res) => {
+  // convert id string into integer
+  const id = parseInt(req.params.id);
+
   try {
-    const _id = req.params.id;
-    const film = await Film.findByIdAndUpdate(_id, req.body, {
-      new: true,
-      runValidators: true,
+    const film = await Film.update(req.body, {
+      where: {
+        id: id,
+      },
     });
 
     // if no film is found
@@ -68,11 +74,16 @@ export const updateFilm = async (req, res) => {
 };
 
 // Route handler to delete a film by ID - DELETE FILM
-export const deleteFilm = async (req, res) => {
+export const deleteFilmById = async (req, res) => {
+  // convert string into integer
+  const id = parseInt(req.params.id);
+
   try {
-    // find and delete film that takes _id into account
-    const film = await Film.findByIdAndDelete({
-      _id: req.params.id,
+    // find and delete film that takes id into account
+    const film = await Film.destroy({
+      where: {
+        id: id,
+      },
     });
 
     // if no film is found

@@ -8,7 +8,7 @@
     - string
 
 3. Release Date (releaseDate)
-    - string
+    - date
 
 4. Genre (genre)
     - string

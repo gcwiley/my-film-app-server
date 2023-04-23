@@ -1,55 +1,30 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import { DataTypes } from 'sequelize';
 
-// create a comment schema
-const filmSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    director: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    releaseDate: {
-      type: Date,
-      required: true,
-    },
-    genre: {
-      type: String,
-      required: true,
-    },
-    summary: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
-    favorite: {
-      type: Boolean,
-      default: false,
-    },
-    owner: {
-      // date stored in owner is going to be ObjectID
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      // ref creates a reference between this field and another model
-      ref: 'User',
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+// import the sequelize instance
+import { sequelize } from '../db/db.js';
 
 // create the film model
-const Film = mongoose.model('Film', filmSchema);
+const Film = sequelize.define('Film', {
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  director: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  releaseDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  genre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  summary: {
+    type: DataTypes.STRING,
+  },
+});
 
 // export the film model
 export { Film };

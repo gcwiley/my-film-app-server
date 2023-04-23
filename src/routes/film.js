@@ -8,7 +8,7 @@ import {
   getFilms,
   getFilmById,
   updateFilm,
-  deleteFilm,
+  deleteFilmById,
 } from '../controllers/film.js';
 
 // Route handler to create a new film - NEW FILM
@@ -24,7 +24,7 @@ router.get('/api/films/:id', getFilmById);
 router.patch('/api/films/:id', updateFilm);
 
 // Route handler to delete a film by ID - DELETE FILM
-router.delete('/api/films/:id', deleteFilm);
+router.delete('/api/films/:id', deleteFilmById);
 
 // export the router to be used
-export { router };
+export { router as filmRouter };
